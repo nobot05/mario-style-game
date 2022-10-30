@@ -34,7 +34,7 @@ class Player {
 }
 
 class Platform {
-  constructor({x, y}) {
+  constructor({ x, y }) {
     this.position = {
       x,
       y,
@@ -49,7 +49,10 @@ class Platform {
 
 const player = new Player();
 // const platform = new Platform();
-const platforms = [new Platform({x: 200, y: 100}), new Platform({x: 500, y: 200})];
+const platforms = [
+  new Platform({ x: 200, y: 100 }),
+  new Platform({ x: 500, y: 200 }),
+];
 
 const keys = {
   right: {
@@ -60,6 +63,8 @@ const keys = {
   },
 };
 player.update();
+
+let scrollOffset = 0;
 
 function animate() {
   requestAnimationFrame(animate);
@@ -75,13 +80,19 @@ function animate() {
   } else {
     player.velocity.x = 0;
     if (keys.right.pressed) {
+      scrollOffset += 5;
       platforms.forEach((platform) => {
         platform.position.x -= 5;
       });
     } else if (keys.left.pressed) {
+      scrollOffset += 5; 
       platforms.forEach((platform) => {
         platform.position.x += 5;
       });
+    }
+
+    if(scrollOffset > 2000){
+        console.log('you win')
     }
   }
   // platform collision detection
